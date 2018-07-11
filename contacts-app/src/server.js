@@ -2,6 +2,7 @@ const Express = require ("express");
 const GraphHttp = require ("express-graphql");
 const Schema = require("./schema.js");
 const bodyParser = require('body-parser');
+const httpRequest = require('request');
 
 const APP_PORT = process.env.APP_PORT;
 
@@ -20,9 +21,9 @@ app.use('/graphql', GraphHttp({
 app.post('/events', jsonParser, async function(req, res) {
         console.log('Event received');
         var event = await parseEvent(req, res);
-        var token = await getOAuthTokenIfExpired(token);
-        var customer = getCommerceCustomer(event.data.customerUid, token);
-        console.log("Customer = " + JSON.stringinfy(custoomer));
+        //var token = await getOAuthTokenIfExpired(token);
+        var customer = getCommerceCustomer(event.data.customerUid);
+        console.log("Customer = " + JSON.stringify(custoomer));
        // saveContact(event);
     }
 );
@@ -66,43 +67,40 @@ async function getCommerceCustomer(customerId, token)
         url: url, 
         method: 'GET',
         json: true,
-        auth: {
-            'bearer': token.access_token
-        },
         timeout: 120000 });
 }
 
 /**
  * get an oauth token
  */
-async function getOAuthTokenIfExpired(currentToken)
-{
-  if (currentToken != null)
-  {
-    console.log("currentToken = " + currentToken);
-    var decoded = jwt.decode(currentToken.access_token);
-    var expiryDate = decoded.exp;
-  }
+// async function getOAuthTokenIfExpired(currentToken)
+// {
+//   if (currentToken != null)
+//   {
+//     console.log("currentToken = " + currentToken);
+//     var decoded = jwt.decode(currentToken.access_token);
+//     var expiryDate = decoded.exp;
+//   }
 
-  if (currentToken == null || parseFloat(expiryDate) >= (Date.now() / 1000))
-  {
-    console.log("getting new token");
-    var token = await httpRequest({
-    url: commerceHost + "/authorizationserver/oauth/token",
-    method: 'POST',
-    json: true,
-    form: {
-      'grant_type': 'client_credentials',
-      'client_id' : 'servicefactory',
-      'client_secret' : 'secret'
-    }
-  });
-    console.log("oauth token = " + token);
-    return token;
-  }
-  else
-  {
-    console.log("returning current token");
-    return currentToken;
-  }
-  }
+//   if (currentToken == null || parseFloat(expiryDate) >= (Date.now() / 1000))
+//   {
+//     console.log("getting new token");
+//     var token = await httpRequest({
+//     url: commerceHost + "/authorizationserver/oauth/token",
+//     method: 'POST',
+//     json: true,
+//     form: {
+//       'grant_type': 'client_credentials',
+//       'client_id' : 'servicefactory',
+//       'client_secret' : 'secret'
+//     }
+//   });
+//     console.log("oauth token = " + token);
+//     return token;
+//   }
+//   else
+//   {
+//     console.log("returning current token");
+//     return currentToken;
+//   }
+//   }
