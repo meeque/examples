@@ -4,7 +4,7 @@ FROM node:8
 WORKDIR /usr/src/contacts-app
 
 # Bundle app source
-COPY ./contacts-app/src .
+COPY ./src .
 
 # Make scrits are executable
 RUN chmod +x *.sh
