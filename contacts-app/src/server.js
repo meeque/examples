@@ -3,6 +3,7 @@ const GraphHttp = require ("express-graphql");
 const Schema = require("./schema.js");
 const bodyParser = require('body-parser');
 const httpRequest = require('request-promise-native');
+const swaggerClient = require('swagger-client');
 
 const APP_PORT = process.env.APP_PORT;
 
@@ -12,10 +13,15 @@ const app = Express();
 
 var jsonParser = bodyParser.json();
 
+var openApiUrl = 'https://minio.gcp.cluster.kyma.cx/content/pb'
+
 const bodParserOptions = {
     type: '*/*'
 };
 
+// create the swagger client 
+const swaggerClient = await Swagger({url: openApiUrl, requestInterceptor: req => logRequest(req)});
+       
 app.use('/graphql', GraphHttp({
     schema: Schema.schema,
     pretty: true,
@@ -23,9 +29,12 @@ app.use('/graphql', GraphHttp({
 }));
 
 app.post('/events', bodyParser.raw(bodParserOptions), async function(req, res) {
-        console.log('Event received');
+       
+    console.log('Event received');
         var event = await parseEvent(req, res);
-        var customer = await getCommerceCustomer(event.data.customerUid);
+       // var customer = await getCommerceCustomer(event.data.customerUid);
+        var customer = await client.apis.Users.getUserUsingGET({userId: event.data.customerUid, baseSiteId:'electronics'});
+       
         console.log("Customer = " + JSON.stringify(customer));
         createCustomer(customer);
         return customer;
@@ -127,3 +136,8 @@ async function getOAuthTokenIfExpired(currentToken)
     return currentToken;
   }
   }
+
+async function logRequest(req)
+{
+   console.log("req = " + JSON.stringify(req));
+}
