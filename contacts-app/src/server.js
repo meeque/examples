@@ -27,7 +27,11 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 // create the swagger client 
-const swaggerClient = await Swagger({url: openApiUrl, requestInterceptor: req => logRequest(req)});
+// TODO - make synchronous
+const swaggerClient = initSwaggerClient();
+
+
+
        
 app.use('/graphql', GraphHttp({
     schema: Schema.schema,
@@ -40,7 +44,7 @@ app.post('/events', bodyParser.raw(bodParserOptions), async function(req, res) {
     console.log('Event received');
         var event = await parseEvent(req, res);
        // var customer = await getCommerceCustomer(event.data.customerUid);
-        var customer = await client.apis.Users.getUserUsingGET({userId: event.data.customerUid, baseSiteId:'electronics'});
+        var customer = await swaggerClient.apis.Users.getUserUsingGET({userId: event.data.customerUid, baseSiteId:'electronics'});
        
         console.log("Customer = " + JSON.stringify(customer));
         createCustomer(customer);
@@ -147,4 +151,9 @@ async function getOAuthTokenIfExpired(currentToken)
 async function logRequest(req)
 {
    console.log("req = " + JSON.stringify(req));
+}
+
+async function initSwaggerClient()
+{
+    return await Swagger({url: openApiUrl, requestInterceptor: req => logRequest(req)});
 }
