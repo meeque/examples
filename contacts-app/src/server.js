@@ -3,7 +3,8 @@ const GraphHttp = require ("express-graphql");
 const Schema = require("./schema.js");
 const bodyParser = require('body-parser');
 const httpRequest = require('request-promise-native');
-const swaggerClient = require('swagger-client');
+const Swagger = require('swagger-client');
+var cors = require('cors');
 
 const APP_PORT = process.env.APP_PORT;
 
