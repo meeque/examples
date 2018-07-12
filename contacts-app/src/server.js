@@ -28,7 +28,7 @@ app.use(cors(corsOptions));
 
 // create the swagger client 
 // TODO - make synchronous
-const swaggerClient = initSwaggerClient();
+
 
 
 
@@ -41,9 +41,12 @@ app.use('/graphql', GraphHttp({
 
 app.post('/events', bodyParser.raw(bodParserOptions), async function(req, res) {
        
+    console.log()
     console.log('Event received');
         var event = await parseEvent(req, res);
-       // var customer = await getCommerceCustomer(event.data.customerUid);
+        // TODO - avoid initializing the client for every event
+        const swaggerClient = initSwaggerClient();
+        // var customer = await getCommerceCustomer(event.data.customerUid);
         var customer = await swaggerClient.apis.Users.getUserUsingGET({userId: event.data.customerUid, baseSiteId:'electronics'});
        
         console.log("Customer = " + JSON.stringify(customer));
@@ -155,5 +158,6 @@ async function logRequest(req)
 
 async function initSwaggerClient()
 {
-    return await Swagger({url: openApiUrl, requestInterceptor: req => logRequest(req)});
+    var client =  await Swagger({url: openApiUrl, requestInterceptor: req => logRequest(req)});
+   return client;
 }
