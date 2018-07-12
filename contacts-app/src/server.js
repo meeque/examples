@@ -2,28 +2,42 @@ const Express = require ("express");
 const GraphHttp = require ("express-graphql");
 const Schema = require("./schema.js");
 const bodyParser = require('body-parser');
+const httpRequest = require('request-promise-native');
+const swaggerClient = require('swagger-client');
 
 const APP_PORT = process.env.APP_PORT;
 
 const app = Express();
 
-const commerceHost = "https://18.196.55.98:9002";
+//const commerceHost = "https://electronics.demo.cluster.kyma.cx";
 
 var jsonParser = bodyParser.json();
 
+var openApiUrl = 'https://minio.gcp.cluster.kyma.cx/content/pb'
+
+const bodParserOptions = {
+    type: '*/*'
+};
+
+// create the swagger client 
+const swaggerClient = await Swagger({url: openApiUrl, requestInterceptor: req => logRequest(req)});
+       
 app.use('/graphql', GraphHttp({
-    schema: Schema,
+    schema: Schema.schema,
     pretty: true,
     graphiql: true
 }));
 
-app.post('/events', jsonParser, async function(req, res) {
-        console.log('Event received');
+app.post('/events', bodyParser.raw(bodParserOptions), async function(req, res) {
+       
+    console.log('Event received');
         var event = await parseEvent(req, res);
-        var token = await getOAuthTokenIfExpired(token);
-        var customer = getCommerceCustomer(event.data.customerUid, token);
-        console.log("Customer = " + JSON.stringinfy(custoomer));
-       // saveContact(event);
+       // var customer = await getCommerceCustomer(event.data.customerUid);
+        var customer = await client.apis.Users.getUserUsingGET({userId: event.data.customerUid, baseSiteId:'electronics'});
+       
+        console.log("Customer = " + JSON.stringify(customer));
+        createCustomer(customer);
+        return customer;
     }
 );
 
@@ -34,14 +48,17 @@ app.listen(APP_PORT, () => {
 async function parseEvent(req, res)
 {
     let data = req.body;
+    console.log("data = " + data);
     if (req.body.length > 0) {
         if (req.get('content-type') === 'application/json') {
-            data = JSON.parse(req.body.toString('utf-8'))
+            data = JSON.parse(req.body.toString('utf-8'));
+            console.log('Event data = ' + JSON.stringify(data));
         } else {
-            data = req.body.toString('utf-8')
+            data = req.body.toString('utf-8');
+            console.log('Event data = ' + data);
         }
     }
-    console.log('Event data = ' + data);
+    
     const event = {
             'event-type': req.get('event-type'),
             'event-id': req.get('event-id'),
@@ -58,20 +75,33 @@ async function parseEvent(req, res)
  * @param {*} customerId 
  * @param {*} token 
  */
-async function getCommerceCustomer(customerId, token)
+async function getCommerceCustomer(customerId)
 {
-    var url = commerceHost + "/rest/v2/" + "electronics" + '/users/' + customerId;
+    var token;
+    //token = await getOAuthTokenIfExpired(token);
+    var url = `${process.env.GATEWAY_URL}/electronics/users/${customerId}`;
+    
+    //commerceHost + "/rest/v2/" + 
     console.log("URL = " +  url);
+    //console.log("token = " + JSON.stringify(token));
     return await httpRequest({ 
         url: url, 
         method: 'GET',
         json: true,
-        auth: {
-            'bearer': token.access_token
-        },
+        // auth: {
+        //     'bearer': token.access_token
+        // },
         timeout: 120000 });
 }
 
+async function createCustomer(comCustomer)
+{
+    return Schema.contacts.create({
+        firstName: comCustomer.firstName,
+        lastName : comCustomer.lastName,
+        email: comCustomer.uid
+    });
+}
 /**
  * get an oauth token
  */
@@ -106,3 +136,8 @@ async function getOAuthTokenIfExpired(currentToken)
     return currentToken;
   }
   }
+
+async function logRequest(req)
+{
+   console.log("req = " + JSON.stringify(req));
+}
