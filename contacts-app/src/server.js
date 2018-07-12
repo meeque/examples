@@ -45,7 +45,8 @@ app.post('/events', bodyParser.raw(bodParserOptions), async function(req, res) {
     console.log('Event received');
         var event = await parseEvent(req, res);
         // TODO - avoid initializing the client for every event
-        const swaggerClient = initSwaggerClient();
+        const swaggerClient = await Swagger({url: openApiUrl, requestInterceptor: req => logRequest(req)});
+        console.log("APIS: "  + JSON.stringify(swaggerClient));
         // var customer = await getCommerceCustomer(event.data.customerUid);
         var customer = await swaggerClient.apis.Users.getUserUsingGET({userId: event.data.customerUid, baseSiteId:'electronics'});
        
