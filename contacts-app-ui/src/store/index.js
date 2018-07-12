@@ -1,7 +1,7 @@
 import ApolloClient from 'apollo-boost';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import defaults from './defaults';
-import builder from './../commons/builder';
+// import builder from './../commons/builder';
 
 export function createApolloClient() {
     const cache = new InMemoryCache();
@@ -35,4 +35,3 @@ export function createApolloClient() {
     return client;
 }
 
-// curl http://35.198.92.130/graphql -H 'Cotent-Type: application/json' --data-binar '{"query":"{\ncontacts{\nid\nfirstName\nlastName\nemail}}"}' -vvv

@@ -1,6 +1,10 @@
 FROM node:9.11.2-alpine as ui-generator
 WORKDIR /app
 
+# Install global dependencies
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
+    
 # Install app dependencies
 COPY package.json package-lock.json /app/
 RUN npm install --production --no-optional
