@@ -20,6 +20,12 @@ const bodParserOptions = {
     type: '*/*'
 };
 
+var corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
+app.use(cors(corsOptions));
+
 // create the swagger client 
 const swaggerClient = await Swagger({url: openApiUrl, requestInterceptor: req => logRequest(req)});
        
