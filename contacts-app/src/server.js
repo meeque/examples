@@ -40,7 +40,7 @@ app.use('/graphql', GraphHttp({
     graphiql: true
 }));
 
-app.post('/events', bodyParser.raw(bodParserOptions), async function(req, res) {
+app.post('/events', bodyParser.json(), async function(req, res) {
        
     console.log("*****");
     console.log('Event received    : ' + req.body);
