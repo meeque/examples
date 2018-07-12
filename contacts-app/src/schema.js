@@ -139,4 +139,5 @@ const Mutation = new GraphQLObjectType({
 
 const Schema = new GraphQLSchema({query: Query, mutation: Mutation});
 
-module.exports = Schema;
+module.exports.schema = Schema;
+module.exports.contacts = Contact;

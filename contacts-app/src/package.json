@@ -19,7 +19,9 @@
         "lowdash": "^1.2.0",
         "mysql2": "^1.5.3",
         "request": "^2.87.0",
-        "sequelize": "^4.38.0"
+        "request-promise-native": "^1.0.5",
+        "sequelize": "^4.38.0",
+        "swagger-client": "^3.8.8"
     },
     "private": true
 }
