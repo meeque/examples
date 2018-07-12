@@ -22,7 +22,8 @@
         "request": "^2.87.0",
         "request-promise-native": "^1.0.5",
         "sequelize": "^4.38.0",
-        "swagger-client": "^3.8.8"
+        "swagger-client": "^3.8.8",
+        "util": "^0.11.0"
     },
     "private": true
 }

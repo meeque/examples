@@ -4,6 +4,7 @@ const Schema = require("./schema.js");
 const bodyParser = require('body-parser');
 const httpRequest = require('request-promise-native');
 const Swagger = require('swagger-client');
+const util = require('util');
 var cors = require('cors');
 
 const APP_PORT = process.env.APP_PORT;
@@ -41,8 +42,8 @@ app.use('/graphql', GraphHttp({
 
 app.post('/events', bodyParser.raw(bodParserOptions), async function(req, res) {
        
-    console.log()
-    console.log('Event received');
+    console.log("*****");
+    console.log('Event received: ' + req.body);
         var event = await parseEvent(req, res);
         // TODO - avoid initializing the client for every event
         const swaggerClient = await Swagger({url: openApiUrl, requestInterceptor: req => logRequest(req)});
@@ -64,6 +65,7 @@ async function parseEvent(req, res)
 {
     let data = req.body;
     console.log("data = " + data);
+    console.log("req = " + util.inspect((req)));
     if (req.body.length > 0) {
         if (req.get('content-type') === 'application/json') {
             data = JSON.parse(req.body.toString('utf-8'));
