@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# TODO: consider using exec npm start to avoid multiple pids
+# WARNING: having multiple apps in single container is bad practice
+#          and is available via SQL_PROXY_ENABLED as backup option.
+#          The recommended way to go is as proposed in manifests/webapp-nodejs.k8s.deployment.yaml
 if [ "${SQL_PROXY_ENABLED}" = "true" ]
 then
     # Start cloud_sql_proxy
