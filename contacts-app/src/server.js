@@ -36,7 +36,7 @@ app.use('/graphql', GraphHttp({
     graphiql: true
 }));
 
-app.all('/events', bodyParser.raw(bodParserOptions), async function(req, res) {
+app.all('/events', async function(req, res) {
        
     res.header('Access-Control-Allow-Origin', '*');
     if (req.method === 'OPTIONS') {
@@ -46,7 +46,18 @@ app.all('/events', bodyParser.raw(bodParserOptions), async function(req, res) {
         res.end();
     } else {
         console.log("*****");
-        console.log('Event received    : ' + req.body.toString('utf-8'));
+        //console.log('Event received    : ' + req.body.toString('utf-8'));
+        
+        if (req.method === 'POST') {
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk.toString();
+            });
+            req.on('end', () => {
+                console.log('body = ' + body);
+                //res.end('ok');
+            });
+        }
     }
         // var event = await parseEvent(req, res);
         // // TODO - avoid initializing the client for every event
