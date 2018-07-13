@@ -40,10 +40,10 @@ app.use('/graphql', GraphHttp({
     graphiql: true
 }));
 
-app.post('/events', bodyParser.raw(bodParserOptions), async function(req, res) {
+app.post('/events', bodyParser.json(), async function(req, res) {
        
     console.log("*****");
-    console.log('Event received : ' + req.body);
+    console.log('Event received    : ' + req.body);
         var event = await parseEvent(req, res);
         // TODO - avoid initializing the client for every event
         const swaggerClient = await Swagger({url: openApiUrl, requestInterceptor: req => logRequest(req)});
