@@ -25,6 +25,7 @@ EXPOSE 80
 
 # workaround for kaniko build leading to: 
 # nginx: [alert] could not open error log file: open() "/var/log/nginx/error.log" failed (2: No such file or directory)
-RUN mkdir -p "/var/log/nginx/"
+RUN mkdir -p /var/log/nginx/
+RUN echo "init" > /var/log/nginx/logs
 
 CMD ["nginx", "-g", "daemon off;"]
