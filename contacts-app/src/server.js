@@ -130,7 +130,7 @@ async function getOAuthTokenIfExpired(currentToken)
 {
   if (currentToken != null)
   {
-    console.log("currentToken = " + currentToken);
+    console.log("currentToken  = " + currentToken);
     var decoded = jwt.decode(currentToken.access_token);
     var expiryDate = decoded.exp;
   }
