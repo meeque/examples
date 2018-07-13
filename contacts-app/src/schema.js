@@ -7,9 +7,6 @@ const {
     GraphQLSchema
   } = require("graphql");
 const { attributeFields } = require('graphql-sequelize');
-//const db = require("./db.js");
-//const { Contact } = require("./db.js");
-
 const Sequelize = require("sequelize");
 const _ = require("lodash");
 const Faker = require("faker"); 
@@ -19,14 +16,16 @@ const Faker = require("faker");
 // 
 
 // Create connection
-// 'contacts-demo','root','',{ dialect : "mysql", host : "localhost", port : "3306" }
 const Conn = new Sequelize
 (
-    //'contacts-demo','root','',{ dialect : "mysql", host : "localhost", port : "3306" }
     process.env.DB_SCHEMA,process.env.DB_USER,process.env.DB_PASSWORD,{ dialect : process.env.DB_DIALECT, host : process.env.DB_HOST, port : process.env.DB_PORT }
 );
 
 const Contact = Conn.define('contact', {
+    title : {
+        type: Sequelize.STRING, 
+        allowNull: true
+    },
     firstName : {
         type: Sequelize.STRING, 
         allowNull: false
@@ -39,9 +38,30 @@ const Contact = Conn.define('contact', {
         type: Sequelize.STRING, 
         allowNull: false,
         unique: true
-        // validate: {
-        //     isEmail: true
-        // }
+    },
+    line1 : {
+        type: Sequelize.STRING, 
+        allowNull: true
+    },
+    line2 : {
+        type: Sequelize.STRING, 
+        allowNull: true
+    },
+    city : {
+        type: Sequelize.STRING, 
+        allowNull: true
+    },
+    country : {
+        type: Sequelize.STRING, 
+        allowNull: true
+    },
+    phone : {
+        type: Sequelize.STRING, 
+        allowNull: true
+    },
+    postalCode : {
+        type: Sequelize.STRING, 
+        allowNull: true
     }
 });
 
@@ -51,11 +71,15 @@ Conn.sync({force: true}).then(() => {
      return Contact.create({
          firstName: Faker.name.firstName(),
          lastName : Faker.name.lastName(),
-         email: Faker.internet.email()
-     });
- });
+         email: Faker.internet.email(),
+         line1: Faker.address.streetName(),
+         line2: Faker.address.state(),
+         city: Faker.address.city(),
+         country: Faker.address.country(),
+         postalCode: Faker.address.zipCode()
+  });
 });
-
+});
 //
 // GraphQL Configuration
 //
@@ -80,6 +104,9 @@ const Query = new GraphQLObjectType({
                         type: GraphQLString
                     },
                     email : {
+                        type: GraphQLString
+                    },
+                    title : {
                         type: GraphQLString
                     }
                 },
@@ -106,6 +133,24 @@ const Mutation = new GraphQLObjectType({
                         type : new GraphQLNonNull(GraphQLString)
                     },
                     email:{
+                        type : new GraphQLNonNull(GraphQLString)
+                    },
+                    line1:{
+                        type : new GraphQLNonNull(GraphQLString)
+                    },
+                    line2:{
+                        type : new GraphQLNonNull(GraphQLString)
+                    },
+                    city:{
+                        type : new GraphQLNonNull(GraphQLString)
+                    },
+                    country:{
+                        type : new GraphQLNonNull(GraphQLString)
+                    },
+                    postalCode:{
+                        type : new GraphQLNonNull(GraphQLString)
+                    },
+                    phone:{
                         type : new GraphQLNonNull(GraphQLString)
                     }
                     },
