@@ -7,7 +7,7 @@ export default compose(
     name: 'contacts',
     options: {
       fetchPolicy: 'cache-and-network',
-      // pollInterval: 3000,
+      pollInterval: 3000,
     },
   }),
 )(MainPage);

@@ -1,7 +1,11 @@
 FROM node:9.11.2-alpine as ui-generator
 WORKDIR /app
 
-# Install app dependencies
+# Install global dependencies
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
+
+# Install nodejs dependencies
 COPY ./contacts-app/web-ui /app/
 RUN npm install --production --no-optional
 
