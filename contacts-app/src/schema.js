@@ -136,22 +136,22 @@ const Mutation = new GraphQLObjectType({
                         type : new GraphQLNonNull(GraphQLString)
                     },
                     line1:{
-                        type : new GraphQLNonNull(GraphQLString)
+                        type : GraphQLString
                     },
                     line2:{
-                        type : new GraphQLNonNull(GraphQLString)
+                        type : GraphQLString
                     },
                     city:{
-                        type : new GraphQLNonNull(GraphQLString)
+                        type : GraphQLString
                     },
                     country:{
-                        type : new GraphQLNonNull(GraphQLString)
+                        type : GraphQLString
                     },
                     postalCode:{
-                        type : new GraphQLNonNull(GraphQLString)
+                        type : GraphQLString
                     },
                     phone:{
-                        type : new GraphQLNonNull(GraphQLString)
+                        type : GraphQLString
                     }
                     },
                 resolve(root, args) {
