@@ -23,4 +23,8 @@ COPY --from=ui-generator /app/build var/public
 
 EXPOSE 80
 
+# workaround for kaniko build leading to: 
+# nginx: [alert] could not open error log file: open() "/var/log/nginx/error.log" failed (2: No such file or directory)
+RUN mkdir -p "/var/log/nginx/"
+
 CMD ["nginx", "-g", "daemon off;"]
