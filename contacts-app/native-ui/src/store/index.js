@@ -1,7 +1,6 @@
 import ApolloClient from 'apollo-boost';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import defaults from './defaults';
-// import builder from './../commons/builder';
 
 export function createApolloClient() {
     const cache = new InMemoryCache();
@@ -31,4 +30,3 @@ export function createApolloClient() {
 
     return client;
 }
-

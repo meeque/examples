@@ -58,6 +58,7 @@ const Logo = styled.span`
   font-size: 20px;
   color: #fff;
   font-family: "72";
+  text-transform: uppercase;
 `;
 const CardHeader = styled.div`
   box-sizing: border-box;
