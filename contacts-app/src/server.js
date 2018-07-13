@@ -47,7 +47,7 @@ app.all('/events', async function(req, res) {
     } else {
         console.log("*****");
         //console.log('Event received    : ' + req.body.toString('utf-8'));
-        
+        console.log("Event time : " + req.get('event-time')); 
         if (req.method === 'POST') {
             let body = '';
             req.on('data', chunk => {
@@ -69,7 +69,9 @@ app.all('/events', async function(req, res) {
         // console.log("Customer = " + JSON.stringify(customer));
         // createCustomer(customer);
         // return customer;
+        res.end(200);
     }
+    
 );
 
 app.listen(APP_PORT, () => {
