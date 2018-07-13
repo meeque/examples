@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from 'styled-components';
 import { CardStack, Card } from 'react-cardstack';
 // import {
@@ -27,39 +27,57 @@ const colors = [
 let contacts = null;
 let contactsLength = 0;
 
-const ContactCard = props => {
+const Center = styled.div`
+  box-sizing: border-box;
+  margin: 0;
+`;
+
+const CardStack1 = styled.div`
+box-sizing: border-box;
+width:400px;
+margin: 0 auto;
+`;
+const Title = styled.h1`
+color:white;
+  padding: 0 20px;
+  font-family: '72';
+  font-size:23px;
+  font-weight:100;
+`;
+
+// const ContactCard = props => {
 
   
-  return (
-    <div>
-      {/* <div style={[styles.cardHeader, { height: 60 }]}>
-        <div
-          style={[
-            styles.logoContainer,
-            {
-              height: 50,
-              width: 50,
-              backgroundColor: colors[props.id % colors.length],
-              marginRight: 20,
-            }
-          ]}
-        >
-          <span style={[styles.logo, { fontSize: 24, }]}>
-            {props.firstName.charAt(0)}
-            {props.lastName.charAt(0)}
-          </span>
-        </div>
-        <span style={[{ fontFamily: "72", fontSize: 18, color: "#515559"  }]}>
-          {props.firstName} {props.lastName}
-        </span>
-      </div>
-      <div style={[{ paddingTop: 10,paddingBottom: 10, marginLeft: 70}]}>
-        <span style={[{ fontFamily: "72-bold", fontSize: 18, color: "#515559" }]}>Email:</span>
-        <span style={[{ fontFamily: "72", fontSize: 15, color: "#515559" } ]}>{props.email}</span>
-      </div> */}
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <div style={[styles.cardHeader, { height: 60 }]}>
+//         <div
+//           style={[
+//             styles.logoContainer,
+//             {
+//               height: 50,
+//               width: 50,
+//               backgroundColor: colors[props.id % colors.length],
+//               marginRight: 20,
+//             }
+//           ]}
+//         >
+//           <span style={[styles.logo, { fontSize: 24, }]}>
+//             {props.firstName.charAt(0)}
+//             {props.lastName.charAt(0)}
+//           </span>
+//         </div>
+//         <span style={[{ fontFamily: "72", fontSize: 18, color: "#515559"  }]}>
+//           {props.firstName} {props.lastName}
+//         </span>
+//       </div>
+//       <div style={[{ paddingTop: 10,paddingBottom: 10, marginLeft: 70}]}>
+//         <span style={[{ fontFamily: "72-bold", fontSize: 18, color: "#515559" }]}>Email:</span>
+//         <span style={[{ fontFamily: "72", fontSize: 15, color: "#515559" } ]}>{props.email}</span>
+//       </div>
+//     </div>
+//   );
+// };
 class MainPage extends React.Component {
   // state = {
   //   fontLoaded: false
@@ -204,29 +222,32 @@ class MainPage extends React.Component {
     contactsLength = contacts.length;
     console.log('contactsLength',contacts,'contacts',contacts);
     return (
-      <div>
+      <Center>
               {contacts &&
                 contactsLength > 2 && (
+                  <CardStack1>
+
 <CardStack
-	height={70*contactsLength}
+	height={55*contactsLength}
 	width={400}
 	background='#f8f8f8'
 	hoverOffset={25}>
                   {contacts.map((contact, index) => (
-
-
-
+                    
+                    
+                    
                     <Card key={index} background={colors[index%colors.length]}>
-                      <h1>{contact.firstName} {contact.lastName}</h1>
+                      <Title>{contact.firstName} {contact.lastName}</Title>
                     </Card>
 
 
-                  ))}
+))}
         
 </CardStack>
+</CardStack1>
                 )}
             
-      </div>
+      </Center>
     );
   }
 }
