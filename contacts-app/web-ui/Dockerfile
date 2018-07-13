@@ -6,7 +6,7 @@ RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh
 
 # Install nodejs dependencies
-COPY ./ /app/
+COPY ./contacts-app/web-ui/ /app/ 
 RUN npm install --production --no-optional
 
 # Set env variables 
