@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const httpRequest = require('request-promise-native');
 const Swagger = require('swagger-client');
 const util = require('util');
-var cors = require('cors');
+const cors = require('cors');
+const morgan = require('morgan');
 
 const APP_PORT = process.env.APP_PORT;
 
@@ -13,7 +14,7 @@ const app = Express();
 
 //const commerceHost = "https://electronics.demo.cluster.kyma.cx";
 
-var jsonParser = bodyParser.json();
+//var jsonParser = bodyParser.json();
 
 var openApiUrl = 'https://minio.gcp.cluster.kyma.cx/content/pb'
 
@@ -27,12 +28,7 @@ var corsOptions = {
   }
 app.use(cors(corsOptions));
 
-// create the swagger client 
-// TODO - make synchronous
-
-
-
-
+app.use(morgan('combined'));
        
 app.use('/graphql', GraphHttp({
     schema: Schema.schema,
@@ -40,20 +36,28 @@ app.use('/graphql', GraphHttp({
     graphiql: true
 }));
 
-app.post('/events', bodyParser.json(), async function(req, res) {
+app.all('/events', bodyParser.raw(bodParserOptions), async function(req, res) {
        
-    console.log("*****");
-    console.log('Event received    : ' + req.body);
-        var event = await parseEvent(req, res);
-        // TODO - avoid initializing the client for every event
-        const swaggerClient = await Swagger({url: openApiUrl, requestInterceptor: req => logRequest(req)});
-        console.log("APIS: "  + JSON.stringify(swaggerClient.apis));
-        // var customer = await getCommerceCustomer(event.data.customerUid);
-        var customer = await swaggerClient.apis.Users.getUserUsingGET({userId: event.data.customerUid, baseSiteId:'electronics'});
+    res.header('Access-Control-Allow-Origin', '*');
+    if (req.method === 'OPTIONS') {
+        // CORS preflight support (Allow any method or header requested)
+        res.header('Access-Control-Allow-Methods', req.headers['access-control-request-method']);
+        res.header('Access-Control-Allow-Headers', req.headers['access-control-request-headers']);
+        res.end();
+    } else {
+        console.log("*****");
+        console.log('Event received    : ' + req.body.toString('utf-8'));
+    }
+        // var event = await parseEvent(req, res);
+        // // TODO - avoid initializing the client for every event
+        // const swaggerClient = await Swagger({url: openApiUrl, requestInterceptor: req => logRequest(req)});
+        // console.log("APIS: "  + JSON.stringify(swaggerClient.apis));
+        // // var customer = await getCommerceCustomer(event.data.customerUid);
+        // var customer = await swaggerClient.apis.Users.getUserUsingGET({userId: event.data.customerUid, baseSiteId:'electronics'});
        
-        console.log("Customer = " + JSON.stringify(customer));
-        createCustomer(customer);
-        return customer;
+        // console.log("Customer = " + JSON.stringify(customer));
+        // createCustomer(customer);
+        // return customer;
     }
 );
 
