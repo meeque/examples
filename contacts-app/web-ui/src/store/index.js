@@ -7,10 +7,7 @@ export function createApolloClient() {
     const cache = new InMemoryCache();
 
     const client = new ApolloClient({
-        uri: 'http://35.198.92.130/graphql',
-        fetchOptions: {
-            mode: 'no-cors',
-          },
+        uri: 'http://contacts.production.example.com/graphql',
         request: async operation => {
             operation.setContext(({ headers = {} }) => ({
                 headers: {
