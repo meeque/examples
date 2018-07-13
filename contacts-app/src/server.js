@@ -45,7 +45,7 @@ app.all('/events', async function(req, res) {
         res.header('Access-Control-Allow-Headers', req.headers['access-control-request-headers']);
         res.end();
     } else {
-        console.log("*****");
+        console.log("*****  ");
         //console.log('Event received    : ' + req.body.toString('utf-8'));
         console.log("Event time : " + req.get('event-time')); 
         if (req.method === 'POST') {
