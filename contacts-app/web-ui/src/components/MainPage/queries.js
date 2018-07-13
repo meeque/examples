@@ -7,3 +7,11 @@ export const GET_CONTACTS = gql`
     }
   }
 `;
+
+// export const GET_CONTACTS = gql`
+//   query Contacts {
+//     contacts {
+//       id, email, firstName, lastName, phone, line1, line2, town, postalCode, country
+//     }
+//   }
+// `;

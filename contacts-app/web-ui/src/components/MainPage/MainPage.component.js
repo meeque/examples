@@ -84,17 +84,17 @@ const Name = styled.div`
 `;
 
 const DetailsKey = styled.div`
-  font-size: 16px;
-  font-family: "72";
-  color: #515559;
-  font-weight: 600;
-`;
-
-const DetailsValue = styled.div`
   font-size: 14px;
   font-family: "72";
   color: #6f7275;
   font-weight: 100;
+`;
+
+const DetailsValue = styled.div`
+  font-size: 16px;
+  font-family: "72";
+  color: #515559;
+  font-weight: 600;
 `;
 
 const ContactCard = props => {
@@ -111,10 +111,23 @@ const ContactCard = props => {
           {props.firstName} {props.lastName}
         </Name>
       </CardHeader>
-      <DetailsContainer>
+      {props.email && <DetailsContainer>
         <DetailsKey>Email:</DetailsKey>
         <DetailsValue>{props.email}</DetailsValue>
-      </DetailsContainer>
+      </DetailsContainer>}
+
+      {props.phone &&<DetailsContainer>
+        <DetailsKey>Phone:</DetailsKey>
+        <DetailsValue>{props.phone}</DetailsValue>
+      </DetailsContainer>}
+
+      {props.line1 &&<DetailsContainer>
+        <DetailsKey>Address:</DetailsKey>
+        <DetailsValue>{props.line1}</DetailsValue>
+        {props.line2 && <DetailsValue>{props.line2}</DetailsValue>}
+        {(props.line2 || props.postalCode) && <DetailsValue>{props.postalCode} {props.town}</DetailsValue>}
+        {props.country && <DetailsValue>{props.country}</DetailsValue>}
+      </DetailsContainer>}
     </RowContainer>
   );
 };
@@ -133,13 +146,24 @@ class MainPage extends React.Component {
     //     id: 1,
     //     email: "Michele_Stokes@gmail.com",
     //     firstName: "Wosianne",
-    //     lastName: "Wreenholt"
+    //     lastName: "Wreenholt",
+    //     phone: "+48 123 456 789", 
+    //     line1: "Backer Street 19B", 
+    //     line2: "more details", 
+    //     town: "London", 
+    //     postalCode: "55-554", 
+    //     country: "United Kingdom"
     //   },
     //   {
     //     id: 2,
     //     email: "Denis_Ryan32@hotmail.com",
     //     firstName: "Moses",
-    //     lastName: "Koelpin"
+    //     lastName: "Koelpin",
+    //     phone: "+48 123 456 789", 
+    //     line1: "Backer Street 19B", 
+    //     town: "London", 
+    //     postalCode: "55-554", 
+    //     country: "United Kingdom"
     //   },
     //   {
     //     id: 3,
