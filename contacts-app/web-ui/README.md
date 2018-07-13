@@ -15,5 +15,5 @@ open http://localhost:8000 or http://localhost:8000/status in a browser
 ```
 docker login gcr.io/kyma-project
 docker tag contacts-app-ui gcr.io/kyma-project/contacts-app-ui:${TAG}
-docker push gcr.io/kyma-project/contacts-app-ui:${TAG}
+docker push eu.gcr.io/kyma-project/contacts-app-ui:${TAG}
 ```
