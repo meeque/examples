@@ -19,6 +19,7 @@ RUN npm run build
 FROM nginx:1.13.12-alpine
 
 COPY --from=ui-generator /app/nginx.conf /etc/nginx/nginx.conf
+COPY --from=ui-generator /app/run.sh /run.sh
 COPY --from=ui-generator /app/build var/public
 
 EXPOSE 80
@@ -28,4 +29,4 @@ EXPOSE 80
 RUN mkdir -p /var/log/nginx/
 RUN echo "init" > /var/log/nginx/logs
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/run.sh"]

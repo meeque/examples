@@ -7,7 +7,7 @@ export function createApolloClient() {
     const cache = new InMemoryCache();
 
     const client = new ApolloClient({
-        uri: 'https://backend.gcp.cluster.kyma.cx/graphql',
+        uri: '/graphql',
         request: async operation => {
             operation.setContext(({ headers = {} }) => ({
                 headers: {
