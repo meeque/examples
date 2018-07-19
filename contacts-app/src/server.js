@@ -69,7 +69,7 @@ app.all('/events', async function(req, res) {
         // console.log("Customer = " + JSON.stringify(customer));
         // createCustomer(customer);
         // return customer;
-        res.end(200);
+        res.end();
     }
     
 );

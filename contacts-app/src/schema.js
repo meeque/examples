@@ -62,6 +62,10 @@ const Contact = Conn.define('contact', {
     postalCode : {
         type: Sequelize.STRING, 
         allowNull: true
+    },
+    lastOrderDate : {
+        type: Sequelize.STRING, 
+        allowNull: true
     }
 });
 
@@ -76,7 +80,8 @@ Conn.sync({force: true}).then(() => {
          line2: Faker.address.state(),
          city: Faker.address.city(),
          country: Faker.address.country(),
-         postalCode: Faker.address.zipCode()
+         postalCode: Faker.address.zipCode(),
+         lastOrderDate: "No Orders"
   });
 });
 });
@@ -152,6 +157,9 @@ const Mutation = new GraphQLObjectType({
                     },
                     phone:{
                         type : GraphQLString
+                    },
+                    lastOrderDate:{
+                        type : GraphQLString
                     }
                     },
                 resolve(root, args) {
@@ -168,18 +176,22 @@ const Mutation = new GraphQLObjectType({
                                     return Contact.create(args);
                                 }
                             });
-                        }
-                    
-                        // return Contact.upsert({
-                        //     firstName: args.firstName,
-                        //     lastName: args.lastName,
-                        //     email: args.email.toLowerCase()
-                        // })
-                    
+                        }     
                 
-            }
+            },
+            deleteContact: {
+                type: GContact,
+                args: {
+                    email:{
+                        type : new GraphQLNonNull(GraphQLString)
+                    }
+                },
+                resolve(root, args) {
+                    return Contact.destroy({ where: {email: args.email}});            
+                } 
         }
     }
+}
 });
 
 const Schema = new GraphQLSchema({query: Query, mutation: Mutation});
