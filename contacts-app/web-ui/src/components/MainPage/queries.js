@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-
+/*
 export const GET_CONTACTS = gql`
   query Contacts {
     contacts {
@@ -7,11 +7,11 @@ export const GET_CONTACTS = gql`
     }
   }
 `;
-
-// export const GET_CONTACTS = gql`
-//   query Contacts {
-//     contacts {
-//       id, email, firstName, lastName, phone, line1, line2, town, postalCode, country
-//     }
-//   }
-// `;
+*/
+export const GET_CONTACTS = gql`
+   query Contacts {
+     contacts {
+       id, email, firstName, lastName, phone, line1, line2, city, postalCode, country
+     }
+   }
+`;

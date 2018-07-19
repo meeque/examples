@@ -70,7 +70,12 @@ const CardHeader = styled.div`
   padding-bottom: 10;
 `;
 const RowContainer = styled.div`
-  padding: 10px;
+  padding: 10px;    
+  box-sizing: border-box;
+  border: solid 1px rgba(0, 0, 0, 0.08);
+  /* border-left: none;
+  border-right: none; */
+  height: 100%;
 `;
 
 const DetailsContainer = styled.div`
@@ -141,140 +146,7 @@ class MainPage extends React.Component {
         contactsLength = contacts.length;
       }
     }
-    // contacts = [
-    //   {
-    //     id: 1,
-    //     email: "Michele_Stokes@gmail.com",
-    //     firstName: "Wosianne",
-    //     lastName: "Wreenholt",
-    //     phone: "+48 123 456 789", 
-    //     line1: "Backer Street 19B", 
-    //     line2: "more details", 
-    //     town: "London", 
-    //     postalCode: "55-554", 
-    //     country: "United Kingdom"
-    //   },
-    //   {
-    //     id: 2,
-    //     email: "Denis_Ryan32@hotmail.com",
-    //     firstName: "Moses",
-    //     lastName: "Koelpin",
-    //     phone: "+48 123 456 789", 
-    //     line1: "Backer Street 19B", 
-    //     town: "London", 
-    //     postalCode: "55-554", 
-    //     country: "United Kingdom"
-    //   },
-    //   {
-    //     id: 3,
-    //     email: "Josefa_Kiehn@yahoo.com",
-    //     firstName: "Kaylee",
-    //     lastName: "Casper"
-    //   },
-    //   {
-    //     id: 4,
-    //     email: "Golden90@hotmail.com",
-    //     firstName: "Mack",
-    //     lastName: "Kessler"
-    //   },
-    //   {
-    //     id: 5,
-    //     email: "Joanny_Kub@gmail.com",
-    //     firstName: "Adah",
-    //     lastName: "Ernser"
-    //   },
-    //   {
-    //     id: 6,
-    //     email: "Gabrielle.Rippin@yahoo.com",
-    //     firstName: "Clyde",
-    //     lastName: "Heaney"
-    //   },
-    //   {
-    //     id: 7,
-    //     email: "Luella_Beer@hotmail.com",
-    //     firstName: "Eda",
-    //     lastName: "Dibbert"
-    //   },
-    //   {
-    //     id: 8,
-    //     email: "Lucas_Harris@gmail.com",
-    //     firstName: "Eduardo",
-    //     lastName: "Corkery"
-    //   },
-    //   {
-    //     id: 9,
-    //     email: "Michele_Stokes@gmail.com",
-    //     firstName: "Josianne",
-    //     lastName: "Greenholt"
-    //   },
-    //   {
-    //     id: 10,
-    //     email: "Denis_Ryan32@hotmail.com",
-    //     firstName: "Moses",
-    //     lastName: "Koelpin"
-    //   },
-    //   {
-    //     id: 11,
-    //     email: "Michele_Stokes@gmail.com",
-    //     firstName: "Josianne",
-    //     lastName: "Greenholt"
-    //   },
-    //   {
-    //     id: 12,
-    //     email: "Denis_Ryan32@hotmail.com",
-    //     firstName: "Moses",
-    //     lastName: "Koelpin"
-    //   },
-    //   {
-    //     id: 13,
-    //     email: "Josefa_Kiehn@yahoo.com",
-    //     firstName: "Kaylee",
-    //     lastName: "Casper"
-    //   },
-    //   {
-    //     id: 14,
-    //     email: "Golden90@hotmail.com",
-    //     firstName: "Mack",
-    //     lastName: "Kessler"
-    //   },
-    //   {
-    //     id: 15,
-    //     email: "Joanny_Kub@gmail.com",
-    //     firstName: "Adah",
-    //     lastName: "Ernser"
-    //   },
-    //   {
-    //     id: 16,
-    //     email: "Gabrielle.Rippin@yahoo.com",
-    //     firstName: "Clyde",
-    //     lastName: "Heaney"
-    //   },
-    //   {
-    //     id: 17,
-    //     email: "Luella_Beer@hotmail.com",
-    //     firstName: "Eda",
-    //     lastName: "Dibbert"
-    //   },
-    //   {
-    //     id: 18,
-    //     email: "Lucas_Harris@gmail.com",
-    //     firstName: "Eduardo",
-    //     lastName: "Corkery"
-    //   },
-    //   {
-    //     id: 19,
-    //     email: "Michele_Stokes@gmail.com",
-    //     firstName: "Josianne",
-    //     lastName: "Greenholt"
-    //   },
-    //   {
-    //     id: 20,
-    //     email: "Denis_Ryan32@hotmail.com",
-    //     firstName: "Moses",
-    //     lastName: "Koelpin"
-    //   }
-    // ];
-    // contactsLength = contacts.length;
+    
     return (
       <Center>
         <CardStack1>
@@ -286,7 +158,7 @@ class MainPage extends React.Component {
               <CardStack
                 height={rowHeight * contactsLength}
                 width={400}
-                background="#f8f8f8"
+                background="#f3f4f5"
                 hoverOffset={20}
               >
                 {contacts.map((contact, index) => (
