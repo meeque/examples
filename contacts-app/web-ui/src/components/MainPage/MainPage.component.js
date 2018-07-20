@@ -36,6 +36,7 @@ const Title = styled.h1`
   padding-left: 10px;
   font-size: 30px;
   line-height: 30px;
+  margin: 20px 0;
 `;
 const TitleContainer = styled.div`
   height: 30px;
@@ -73,8 +74,6 @@ const RowContainer = styled.div`
   padding: 10px;    
   box-sizing: border-box;
   border: solid 1px rgba(0, 0, 0, 0.08);
-  /* border-left: none;
-  border-right: none; */
   height: 100%;
 `;
 
@@ -132,6 +131,12 @@ const ContactCard = props => {
         {props.line2 && <DetailsValue>{props.line2}</DetailsValue>}
         {(props.line2 || props.postalCode) && <DetailsValue>{props.postalCode} {props.town}</DetailsValue>}
         {props.country && <DetailsValue>{props.country}</DetailsValue>}
+      </DetailsContainer>}
+
+
+      {props.lastOrderDate &&<DetailsContainer>
+        <DetailsKey>Last order date:</DetailsKey>
+        <DetailsValue>{props.lastOrderDate}</DetailsValue>
       </DetailsContainer>}
     </RowContainer>
   );
