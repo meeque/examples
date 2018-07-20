@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Moment from 'moment';
 import { CardStack, Card } from "react-cardstack";
 
 const colors = [
@@ -102,6 +103,9 @@ const DetailsValue = styled.div`
 `;
 
 const ContactCard = props => {
+
+  let date;
+  if(props.lastOrderDate && props.lastOrderDate !== "No Orders") date = new Date(props.lastOrderDate);
   return (
     <RowContainer>
       <CardHeader>
@@ -134,9 +138,12 @@ const ContactCard = props => {
       </DetailsContainer>}
 
 
-      {props.lastOrderDate &&<DetailsContainer>
+      {props.lastOrderDate && <DetailsContainer>
         <DetailsKey>Last order date:</DetailsKey>
-        <DetailsValue>{props.lastOrderDate}</DetailsValue>
+        <DetailsValue>
+          {!date && props.lastOrderDate}
+          {date && Moment(date).utc().format('YYYY-MM-DD HH:mm')}
+        </DetailsValue>
       </DetailsContainer>}
     </RowContainer>
   );
