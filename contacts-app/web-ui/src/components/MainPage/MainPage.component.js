@@ -142,7 +142,7 @@ const ContactCard = props => {
         <DetailsKey>Last order date:</DetailsKey>
         <DetailsValue>
           {!date && props.lastOrderDate}
-          {date && Moment(date).utc().format('YYYY-MM-DD HH:mm')}
+          {date && Moment(date).format('YYYY-MM-DD HH:mm')}
         </DetailsValue>
       </DetailsContainer>}
     </RowContainer>
